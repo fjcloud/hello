@@ -1,2 +1,2 @@
 # Hello World
-[test](posts/test.md)
+[test](https://raw.githubusercontent.com/fjcloud/hello/main/posts/test.md)
