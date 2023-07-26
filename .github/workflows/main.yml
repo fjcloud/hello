@@ -10,7 +10,7 @@ on:
 jobs:
   deploy:
     environment: prod
-    runs-on: fedora-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - uses: jakejarvis/s3-sync-action@master
