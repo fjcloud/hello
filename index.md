@@ -1,2 +1,2 @@
-# Hello World
-[test](posts/test.md)
+# fjcloud blog
+[First blog post](posts/helloworld.md)
