@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mon site avec Zero MD</title>
+</head>
+<body>
+  <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/page/page.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const backButton = document.createElement("button");
+      backButton.textContent = "Back";
+      backButton.style.display = "none";
+      document.body.appendChild(backButton);
+
+      const navigateTo = (newSrc) => {
+        zeroMd.setAttribute("src", newSrc);
+        zeroMd.render();
+      };
+
+      const zeroMd = document.createElement("zero-md");
+      zeroMd.setAttribute("src", "https://raw.githubusercontent.com/fjcloud/hello/main/index.md");
+      document.body.appendChild(zeroMd);
+
+      const translateCleanURL = (url) => {
+        const cleanURLRegex = /^\/posts\/(.+).html$/;
+        const match = url.match(cleanURLRegex);
+        return match ? `https://raw.githubusercontent.com/fjcloud/hello/main/posts/${match[1]}.md` : null;
+      };
+
+      zeroMd.addEventListener("zero-md-rendered", () => {
+        const nodes = zeroMd.shadowRoot.querySelectorAll("a[href$='.md']");
+        nodes.forEach((node) => {
+          node.addEventListener("click", (e) => {
+            e.preventDefault();
+            const newSrc = node.href;
+            navigateTo(newSrc);
+            backButton.style.display = "block";
+            const cleanHref = newSrc.match(/https:\/\/raw\.githubusercontent\.com(.+)/);
+            if (cleanHref) {
+              page(`/content${cleanHref[1]}`);
+            }
+          });
+        });
+      });
+
+      const goBack = () => {
+        page("/");
+        backButton.style.display = "none";
+        window.location.reload();
+      };
+
+      backButton.addEventListener("click", goBack);
+
+      const links = zeroMd.shadowRoot.querySelectorAll("a[href$='.md']");
+      links.forEach((link) => {
+        const href = link.getAttribute("href");
+        page(`/content${href}`, () => {
+          navigateTo(href);
+          backButton.style.display = "block";
+        });
+      });
+
+      page('*', (ctx) => {
+        const translatedURL = translateCleanURL(ctx.path);
+        if (translatedURL) {
+          navigateTo(translatedURL);
+          backButton.style.display = "block";
+        } else {
+          page.redirect('/');
+        }
+      });
+
+      page();
+    });
+  </script>
+</body>
+</html>
