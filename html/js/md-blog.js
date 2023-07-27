@@ -1,4 +1,4 @@
-class BlogNavigation {
+export default class BlogNavigation {
   constructor({
     zeroMdUrl = '',
     postsPath = '',
