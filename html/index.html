@@ -24,7 +24,7 @@
       document.body.appendChild(zeroMd);
 
       const translateCleanURL = (url) => {
-        const cleanURLRegex = /^\/posts\/(.+).html$/;
+        const cleanURLRegex = /^\/posts\/(.+)$/;
         const match = url.match(cleanURLRegex);
         return match ? `https://raw.githubusercontent.com/fjcloud/hello/main/posts/${match[1]}.md` : null;
       };
