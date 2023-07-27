@@ -6,7 +6,6 @@ export default class BlogNavigation {
     zeroMdElement = null,
   } = {}) {
     this.zeroMdUrl = zeroMdUrl;
-    this.postsPath = postsPath;
     this.backButtonElement = backButtonElement || document.createElement('button');
     this.zeroMdElement = zeroMdElement || document.createElement('zero-md');
     this.setup();
@@ -18,7 +17,7 @@ export default class BlogNavigation {
   }
   
   translateCleanURL(url) {
-    const cleanURLRegex = new RegExp(`^${this.postsPath}(.+)$`);
+    const cleanURLRegex = /^\/posts\/(.+)$/;
     const match = url.match(cleanURLRegex);
     return match ? `${this.zeroMdUrl}${match[1]}.md` : null;
   }
