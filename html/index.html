@@ -2,114 +2,20 @@
 <html>
 <head>
   <title>fjcloud blog</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    button {
-      margin: 10px;
-      padding: 5px 15px;
-      border: none;
-      outline: none;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    zero-md {
-      padding: 10px;
-      background-color: white;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    @media (max-width: 600px) {
-      zero-md {
-        width: 100%;
-        padding: 5px;
-      }
-    }
-  </style>
 </head>
 <body>
-  <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/page/page.js"></script>
-
+  <script src="js/md-blog.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const backButton = document.createElement("button");
-      backButton.textContent = "Back";
-      backButton.style.display = "none";
-      document.body.appendChild(backButton);
+    
+     document.addEventListener('DOMContentLoaded', () => {
+     new BlogNavigation({
+       zeroMdUrl: 'https://raw.githubusercontent.com/fjcloud/hello/main/index.md',
+       postsPath: '/posts/',
+     });
+   });
 
-      const navigateTo = (newSrc) => {
-        zeroMd.setAttribute("src", newSrc);
-        zeroMd.render();
-      };
-
-      const zeroMd = document.createElement("zero-md");
-      zeroMd.setAttribute("src", "https://raw.githubusercontent.com/fjcloud/hello/main/index.md");
-      document.body.appendChild(zeroMd);
-
-      const translateCleanURL = (url) => {
-        const cleanURLRegex = /^\/posts\/(.+)$/;
-        const match = url.match(cleanURLRegex);
-        return match ? `https://raw.githubusercontent.com/fjcloud/hello/main/posts/${match[1]}.md` : null;
-      };
-
-      zeroMd.addEventListener("zero-md-rendered", () => {
-        const nodes = zeroMd.shadowRoot.querySelectorAll("a[href$='.md']");
-        nodes.forEach((node) => {
-          node.addEventListener("click", (e) => {
-            e.preventDefault();
-            const newSrc = node.href;
-            navigateTo(newSrc);
-            backButton.style.display = "block";
-            const cleanHref = newSrc.match(/https:\/\/raw\.githubusercontent\.com(.+)/);
-            if (cleanHref) {
-              page(`/content${cleanHref[1]}`);
-            }
-          });
-        });
-      });
-
-      const goBack = () => {
-        page("/");
-        backButton.style.display = "none";
-        window.location.reload();
-      };
-
-      backButton.addEventListener("click", goBack);
-
-      const links = zeroMd.shadowRoot.querySelectorAll("a[href$='.md']");
-      links.forEach((link) => {
-        const href = link.getAttribute("href");
-        page(`/content${href}`, () => {
-          navigateTo(href);
-          backButton.style.display = "block";
-        });
-      });
-
-      page('*', (ctx) => {
-        const translatedURL = translateCleanURL(ctx.path);
-        if (translatedURL) {
-          navigateTo(translatedURL);
-          backButton.style.display = "block";
-        } else {
-          page.redirect('/');
-        }
-      });
-
-      page();
-    });
   </script>
 </body>
 </html>
