@@ -1,4 +1,4 @@
-import BlogNavigation from './js/md-blog.js';
+import BlogNavigation from './md-blog.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     new BlogNavigation({
