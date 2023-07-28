@@ -53,9 +53,9 @@ export default class BlogNavigation {
         const newSrc = node.href;
         this.navigateTo(newSrc);
         this.backButtonElement.style.display = 'block';
-        const cleanHref = newSrc.match(/https:\/\/raw\.githubusercontent\.com(.+)/);
+        const cleanHref = newSrc.match(/https:\/\/raw\.githubusercontent\.com\/fjcloud\/hello\/main\/(.+)/);
         if (cleanHref) {
-          page(`/content${cleanHref[1]}`);
+          page(`/posts/${cleanHref[1]}`);
         }
       });
     });
