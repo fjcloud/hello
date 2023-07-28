@@ -12,6 +12,7 @@ export default class BlogNavigation {
   }
   
   navigateTo(newSrc) {
+    console.log(`Navigating to: ${newSrc}`);
     this.zeroMdElement.setAttribute('src', newSrc);
     this.zeroMdElement.render();
   }
@@ -51,6 +52,7 @@ export default class BlogNavigation {
       node.addEventListener('click', (e) => {
         e.preventDefault();
         const newSrc = node.href.replace(/https:\/\/raw\.githubusercontent\.com\/fjcloud\/hello\/main\/posts\/(.+)\.md/, '/posts/$1');
+        console.log(`Handling render for: ${newSrc}`);
         this.navigateTo(newSrc);
         this.backButtonElement.style.display = 'block';
         page(newSrc);
