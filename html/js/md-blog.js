@@ -51,7 +51,7 @@ export default class BlogNavigation {
     nodes.forEach((node) => {
       node.addEventListener('click', (e) => {
         e.preventDefault();
-        const newSrc = node.href.replace(/https:\/\/raw\.githubusercontent\.com\/fjcloud\/hello\/main\/posts\/(.+)\.md/, '/posts/$1');
+        const newSrc = node.href.replace(/https:\/\/raw\.githubusercontent\.com\/fjcloud\/hello\/main\/(.+)\.md/, 'https://raw.githubusercontent.com/fjcloud/hello/main/$1.md');
         console.log(`Handling render for: ${newSrc}`);
         this.navigateTo(newSrc);
         this.backButtonElement.style.display = 'block';
