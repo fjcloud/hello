@@ -38,7 +38,7 @@ export default class BlogNavigation {
         this.navigateTo(translatedURL);
         this.backButtonElement.style.display = 'block';
       } else {
-        page.redirect('/');
+        page.redirect('/posts/helloworld');
       }
     });
 
