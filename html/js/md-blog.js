@@ -19,7 +19,7 @@ export default class BlogNavigation {
   translateCleanURL(url) {
     const cleanURLRegex = /^\/(.+)$/;
     const match = url.match(cleanURLRegex);
-    return match ? `${this.zeroMdUrl}${match[1]}.md` : null;
+    return match ? `${this.zeroMdUrl}${match[1]}` : null;
   }
   
   setup() {
@@ -50,13 +50,10 @@ export default class BlogNavigation {
     nodes.forEach((node) => {
       node.addEventListener('click', (e) => {
         e.preventDefault();
-        const newSrc = node.href;
+        const newSrc = node.href.replace(/https:\/\/raw\.githubusercontent\.com\/fjcloud\/hello\/main\/(.+)/, '/posts/$1');
         this.navigateTo(newSrc);
         this.backButtonElement.style.display = 'block';
-        const cleanHref = newSrc.match(/https:\/\/raw\.githubusercontent\.com\/fjcloud\/hello\/main\/(.+)/);
-        if (cleanHref) {
-          page(`/posts/${cleanHref[1]}`);
-        }
+        page(newSrc);
       });
     });
   }
