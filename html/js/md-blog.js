@@ -17,9 +17,9 @@ export default class BlogNavigation {
   }
   
   translateCleanURL(url) {
-    const cleanURLRegex = /^\/posts\/(.+)$/;
+    const cleanURLRegex = /^\/(.+)$/;
     const match = url.match(cleanURLRegex);
-    return match ? `${this.zeroMdUrl}${match[1]}` : null;
+    return match ? `${this.zeroMdUrl}${match[1]}.md` : null;
   }
   
   setup() {
